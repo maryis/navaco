@@ -6,17 +6,26 @@ import java.io.InputStreamReader;
 
 public class Player {
 
-    Robot robot;
+    private Robot robot;
+
+    public static Player getPlayer(Robot robot){
+        return new Player(robot);
+    }
+
+    private Player(Robot robot) {
+        this.robot = robot;
+    }
 
     public void start() {
 
+        robot.place(0,0, Robot.Direction.NORTH);
         System.out.println("The Robot is in 0,0,North");
         while (true) {
             BufferedReader reader =
                     new BufferedReader(new InputStreamReader(System.in));
 
             nextMove(reader);
-            System.out.println("Do you want to continue?(y/n)");
+            System.out.println("\nDo you want to continue?(y/n)");
 
             String cont = null;
             try {
@@ -39,6 +48,7 @@ public class Player {
         System.out.println("2: move to selected direction");
         System.out.println("3: spin direction 90 degree to left");
         System.out.println("4: spin direction 90 degree to right");
+        System.out.println("5: report current status");
 
         String action = null;
         try {
@@ -62,54 +72,22 @@ public class Player {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                 case "2"://move
-                System.out.println("Select next x(0..5)");
-                int x = 0;
-                try {
+            case "2"://move
 
-                    x = r.read();
-                    System.out.println("Select next y(0..5)");
-                    int y = r.read();
-                    System.out.println("Select next dir(0:NORTH, 1:EAST, 2:SOUTH, 3:WEST)");
-                    int dir = r.read();
-                    robot.place(x, y, Robot.Direction.values()[dir]);
+                robot.move();
+                break;
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                 case "3"://left
-                System.out.println("Select next x(0..5)");
-                int x = 0;
-                try {
+            case "3"://left
+                robot.left();
+                break;
+            case "4"://right
 
-                    x = r.read();
-                    System.out.println("Select next y(0..5)");
-                    int y = r.read();
-                    System.out.println("Select next dir(0:NORTH, 1:EAST, 2:SOUTH, 3:WEST)");
-                    int dir = r.read();
-                    robot.place(x, y, Robot.Direction.values()[dir]);
+                robot.right();
+                break;
+            case "5"://report
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                   case "4"://right
-                System.out.println("Select next x(0..5)");
-                int x = 0;
-                try {
-
-                    x = r.read();
-                    System.out.println("Select next y(0..5)");
-                    int y = r.read();
-                    System.out.println("Select next dir(0:NORTH, 1:EAST, 2:SOUTH, 3:WEST)");
-                    int dir = r.read();
-                    robot.place(x, y, Robot.Direction.values()[dir]);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
-
+                robot.report();
+                break;
         }
     }
 }

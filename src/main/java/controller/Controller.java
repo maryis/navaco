@@ -1,6 +1,7 @@
 package main.java.controller;
 
 import main.java.beans.NavacoRobot;
+import main.java.beans.Player;
 import main.java.beans.Robot;
 
 public class Controller {
@@ -8,11 +9,7 @@ public class Controller {
 
 
         Robot robot=new NavacoRobot();
-        robot.place(0,0, Robot.Direction.NORTH);
-        robot.move();
-        robot.report();
-        robot.left();
-        robot.report();
-
+        Player player=Player.getPlayer(robot);
+        player.start();
     }
 }
